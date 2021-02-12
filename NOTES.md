@@ -38,3 +38,27 @@ query {
 
 ## Add JWT-based Authentication with Express Middleware
 
+```shell
+# install jwt
+$ npm i jsonwebtoken 
+# install Express middleware that verifies and decodes the JWT when it’s sent with requests from GraphQL Playground
+$ npm i express-jwt
+```
+
+```gql
+mutation {
+  login(email: "alice@email.com", password:"pAsSWoRd!")
+}
+```
+
+We’ll paste the returned token it into the “HTTP Headers” panel of GraphQL Playground as follows:
+
+```json
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+## Authorize API Requests with GraphQL Shield
+
+
