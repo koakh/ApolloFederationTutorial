@@ -1,7 +1,9 @@
 const { ApolloServer, gql } = require('apollo-server');
 const { buildFederatedSchema } = require('@apollo/federation');
+const { applyMiddleware } = require('graphql-middleware');
 const jwt = require('jsonwebtoken');
 const { accounts } = require('../data');
+const { permissions } = require('./permissions');
 
 const port = 5001;
 const namespaceClaim = 'https://awesomeapi.com/graphql';
@@ -59,7 +61,7 @@ const resolvers = {
     viewer(parent, args, { user }) {
       debugger;
       return accounts.find(account => account.id === user.sub);
-    },    
+    },
   },
   Mutation: {
     login(parent, { email, password }) {
@@ -76,7 +78,13 @@ const resolvers = {
 };
 
 const server = new ApolloServer({
-  schema: buildFederatedSchema([{ typeDefs, resolvers }]),
+  // without middleware
+  // schema: buildFederatedSchema([{ typeDefs, resolvers }]),
+  // with middleware: require graphql-middleware
+  schema: applyMiddleware(
+    buildFederatedSchema([{ typeDefs, resolvers }]),
+    permissions,
+  ),
   // user header sent by gateway
   // intercept the new HTTP header in the Apollo Server context for
   // the accounts service and add it to that context object:

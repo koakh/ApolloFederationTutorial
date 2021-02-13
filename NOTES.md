@@ -3,6 +3,7 @@
 ## Links
 
 - [Setting Up Authentication and Authorization with Apollo Federation](https://www.apollographql.com/blog/setting-up-authentication-and-authorization-with-apollo-federation/)
+- [mandiwise/apollo-federation-auth-demo](https://github.com/mandiwise/apollo-federation-auth-demo)
 
 ## Configure the Accounts Service and the Gateway API
 
@@ -61,4 +62,8 @@ We’ll paste the returned token it into the “HTTP Headers” panel of GraphQL
 
 ## Authorize API Requests with GraphQL Shield
 
+```shell
+$ npm i graphql-middleware graphql-shield
+```
 
+Try running the account, accounts, and viewer queries with valid access tokens for both Alice and Bob now. You will see that **Alice is authorized to run any query based on her permissions**, but **Bob is only able to run the viewer query or query his specific account by ID**.
